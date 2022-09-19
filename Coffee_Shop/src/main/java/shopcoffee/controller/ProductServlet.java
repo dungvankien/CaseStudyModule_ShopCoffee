@@ -8,6 +8,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -42,8 +43,12 @@ public class ProductServlet extends HttpServlet {
             case "home":
                 homeProduct(request,response);
                 break;
+            case "search":
+                searchName(request, response);
+                break;
             default:
                 listProduct(request,response);
+                break;
         }
     }
 
@@ -54,12 +59,32 @@ public class ProductServlet extends HttpServlet {
         dispatcher.forward(request,response);
     }
 
+//    private void listProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        List<Product> productList = productService.selectAll();
+//        request.setAttribute("productList",productList);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/product/list.jsp");
+//        dispatcher.forward(request,response);
+//    }
+//    Phân trang
     private void listProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Product> productList = productService.selectAll();
+        int count = productService.getTotalProduct();
+        int endPage = count/3;
+        if (count % 3 != 0){
+            endPage ++;
+        }
+        request.setAttribute("endPage", endPage) ;
+
+        String indexPage = request.getParameter("index");
+        if (indexPage == null){
+            indexPage ="1";
+        }
+        int index = Integer.parseInt(indexPage);
+        List<Product> productList = productService.pageProduct(index);
         request.setAttribute("productList",productList);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/product/list.jsp");
         dispatcher.forward(request,response);
     }
+
 
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -99,23 +124,33 @@ public class ProductServlet extends HttpServlet {
             case "search":
                 searchName(request, response);
                 break;
+            default:
+                listProduct(request,response);
+                break;
         }
     }
 
     private void searchName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("searchName");
-        List<Product> productList = productService.selectByCondition(name);
-        if (productList.isEmpty()){
-            try {
-                int id = Integer.parseInt(request.getParameter("searchName"));
-                productList = productService.selectByConditionID(id);
-            } catch (NumberFormatException numberFormatException){
-                productList = null;
-            }
+
+        int count =productService.getCountProductSearch(name);
+        int endPage = count/3;
+        if (count % 3 != 0){
+            endPage ++;
         }
+        request.setAttribute("endPage", endPage);
+        request.setAttribute("search",name);
+
         if (name.isEmpty()){
             listProduct(request,response);
         } else {
+            String indexPage = request.getParameter("index");
+            if (indexPage == null){
+                indexPage ="1";
+            }
+            int index = Integer.parseInt(indexPage);
+            List<Product> productList = productService.pageProductSearch(index,name);
+
             request.setAttribute("productList", productList);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/product/search.jsp");
             dispatcher.forward(request, response);
@@ -130,13 +165,13 @@ public class ProductServlet extends HttpServlet {
 
         //        Upload file
         Part part =request.getPart("image");
-        String realPath = request.getServletContext().getRealPath("/images");
+        String realPath = request.getServletContext().getRealPath("/image");
         String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
         if(!Files.exists(Paths.get(realPath))){
             Files.createDirectory(Paths.get(realPath));
         }
-        part.write(realPath + "/" + filename);
-        String image =   "/images/" + filename;
+        part.write("C:\\codegym\\Case Study Module 3\\CaseStudyModule_ShopCoffee\\Coffee_Shop\\src\\main\\webapp\\assets\\image\\" + filename);
+        String image = "/assets/image/" + filename;
 
         Product product = new Product(idProduct,nameProduct,price,amount,image);
         productService.update(product);
@@ -153,13 +188,13 @@ public class ProductServlet extends HttpServlet {
 
 //        Upload file
         Part part =request.getPart("image");
-        String realPath = request.getServletContext().getRealPath("/images");
+        String realPath = request.getServletContext().getRealPath("/image");
         String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
         if(!Files.exists(Paths.get(realPath))){
             Files.createDirectory(Paths.get(realPath));
         }
-        part.write(realPath + "/" + filename);
-        String image =   "/images/" + filename;
+        part.write("C:\\codegym\\Case Study Module 3\\CaseStudyModule_ShopCoffee\\Coffee_Shop\\src\\main\\webapp\\assets\\image\\" + filename);
+        String image = "/assets/image/" + filename;
 
         Product product = new Product(nameProduct,price,amount,image);
         productService.insert(product);

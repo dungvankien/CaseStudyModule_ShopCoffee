@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +40,7 @@
                         </li>
                     </ul>
                     <form class="d-flex" method="post" action="/products?action=search">
-                        <input class="form-control me-2" type="text" placeholder="Search by Name/Id" name="searchName">
+                        <input class="form-control me-2" type="text" placeholder="Search by name" name="searchName">
                         <button class="btn btn-primary" type="submit" value="search">Search</button>
                     </form>
                 </div>
@@ -65,8 +66,13 @@
                 <tr class="text-center">
                     <th scope="row">${item.getIdProduct()}</th>
                     <td >${item.getNameProduct()}</td>
-                    <td >${item.getPrice()}</td>
-                    <td >${item.getAmount()}</td>
+                    <td>
+                        <fmt:setLocale value = "vi_VN"/>
+                        <fmt:formatNumber value = "${item.getPrice()}" type = "currency"/>
+                    </td>
+                    <td>
+                        <fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${item.getAmount()}" />
+                    </td>
                     <td ><img height="100px" width="150px" src="${item.getImage()}" alt=""></td>
                     <td >
                         <a href="/products?action=edit&id=${item.getIdProduct()}" >
@@ -79,6 +85,15 @@
 
             </tbody>
         </table>
+        <div>
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link">Page: </a></li>
+                <c:forEach begin="1" end="${endPage}" var="index">
+                <li class="page-item"><a class="page-link" href="products?index=${index}">${index}</a></li>
+                </c:forEach>
+            </ul>
+        </div>
+
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
             <ul class="nav">
                 <li class="nav-item">

@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductServiceImpl implements DaoInterface<Product>{
 
@@ -93,6 +94,85 @@ public class ProductServiceImpl implements DaoInterface<Product>{
             e.printStackTrace();
         }
         return result;
+    }
+    // phân trang
+    public int getTotalProduct(){
+        String query ="SELECT count(*) FROM caseshopcoffee.product;";
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+    //Phân trang
+    public List<Product> pageProduct(int index) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM product limit ?, 3;";
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1,((index-1)*3));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int idProduct = resultSet.getInt("idProduct");
+                String nameProduct = resultSet.getString("nameProduct");
+                double price = resultSet.getDouble("price");
+                int amount = resultSet.getInt("amount");
+                String image = resultSet.getString("image");
+                Product product = new Product(idProduct, nameProduct, price, amount, image);
+                list.add(product);
+            }
+            JDBCUtil.closeConnection(connection);
+        } catch ( SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Product> pageProductSearch(int index,String search) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM product where nameProduct like ? limit ? ,3;";
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "%"+search+"%");
+            preparedStatement.setInt(2,((index-1)*3));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int idProduct = resultSet.getInt("idProduct");
+                String nameProduct = resultSet.getString("nameProduct");
+                double price = resultSet.getDouble("price");
+                int amount = resultSet.getInt("amount");
+                String image = resultSet.getString("image");
+                Product product = new Product(idProduct, nameProduct, price, amount, image);
+                list.add(product);
+            }
+            JDBCUtil.closeConnection(connection);
+        } catch ( SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public int getCountProductSearch(String search){
+        String query ="SELECT count(*) FROM product where nameProduct like ? ;";
+        try {
+            Connection connection = JDBCUtil.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, "%"+search+"%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override
