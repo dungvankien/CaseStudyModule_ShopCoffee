@@ -22,20 +22,14 @@
     <div class="row">
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+                <a class="navbar-brand" href="#"><i  class="fa-solid fa-house"></i></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
+                            <h3> <a class="nav-link" href="#">CUSTOMER LIST</a></h3>
                         </li>
                     </ul>
                     <form class="d-flex" method="post" action="/customers?action=search">
@@ -79,22 +73,21 @@
 
             </tbody>
         </table>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Active</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
-                </li>
-            </ul>
-        </nav>
+        <div style="padding: 0;">
+            <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end footer" >
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i class="fa-regular fa-address-card"></i> Contact Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Address: </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Email: </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 <script src="/assets/js/bootstrap.bundle.js"></script>

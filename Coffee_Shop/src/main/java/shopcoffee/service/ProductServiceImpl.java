@@ -1,6 +1,5 @@
 package shopcoffee.service;
 
-import shopcoffee.model.Customer;
 import shopcoffee.model.Product;
 
 import java.sql.Connection;

@@ -14,29 +14,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer List</title>
+    <title>Product List</title>
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/all.min.css">
+
 </head>
 <body>
 <div class="container">
     <div class="row">
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+                <a class="navbar-brand" href="#"><i  class="fa-solid fa-house"></i></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
+                            <h3> <a class="nav-link" href="#">PRODUCT LIST</a></h3>
                         </li>
                     </ul>
                     <form class="d-flex" method="post" action="/products?action=search">
@@ -50,7 +45,7 @@
             <thead>
             <tr>
                 <td colspan="12"><a href="/products?action=create">
-                    <button style="width:100%" type="button" class="btn btn-outline-success" title="Add New Customer" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-content="Content"><i class="fa-solid fa-plus"></i></button></a></td>
+                    <button style="width:100%" type="button" class="btn btn-outline-success" title="Add New Product" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="top" data-content="Content"><i class="fa-solid fa-plus"></i></button></a></td>
             </tr>
             <tr class="text-center">
                 <th scope="col">ID PRODUCT</th>
@@ -85,7 +80,7 @@
 
             </tbody>
         </table>
-        <div>
+        <div style="position: fixed; bottom: 42px" >
             <ul class="pagination">
                 <li class="page-item"><a class="page-link">Page: </a></li>
                 <c:forEach begin="1" end="${endPage}" var="index">
@@ -93,23 +88,23 @@
                 </c:forEach>
             </ul>
         </div>
-
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Active</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
-                </li>
-            </ul>
-        </nav>
+    </div>
+    <div class="container" style="position: fixed; bottom: 0; margin: 0; padding: 0" >
+        <div>
+            <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end footer" style="right: 10px">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i class="fa-regular fa-address-card"></i> Contact Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Address: </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Email: </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 <script src="/assets/js/bootstrap.bundle.js"></script>

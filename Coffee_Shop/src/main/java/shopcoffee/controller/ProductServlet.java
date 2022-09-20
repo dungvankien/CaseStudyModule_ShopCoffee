@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @MultipartConfig()
@@ -89,10 +90,7 @@ public class ProductServlet extends HttpServlet {
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         productService.delete(id);
-        List<Product> productList = productService.selectAll();
-        request.setAttribute("productList", productList);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/product/list.jsp");
-        requestDispatcher.forward(request,response);
+        listProduct(request,response);
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -174,11 +172,28 @@ public class ProductServlet extends HttpServlet {
         String image = "/assets/image/" + filename;
 
         Product product = new Product(idProduct,nameProduct,price,amount,image);
-        productService.update(product);
-        request.setAttribute("product",product);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/product/edit.jsp");
-        requestDispatcher.forward(request, response);
 
+        // Check err
+        List<String> err = new ArrayList<>();
+        if(price < 0) {
+            err.add("price greater than zero");
+        }
+        if (amount < 0) {
+            err.add("Amount greater than zero");
+        }
+        if(!err.isEmpty()) {
+            request.setAttribute("err",err);
+            request.setAttribute("product",product);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/product/edit.jsp");
+            requestDispatcher.forward(request, response);
+        } else {
+            productService.update(product);
+            String message = "successful update";
+            request.setAttribute("message",message);
+            request.setAttribute("product",product);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/product/edit.jsp");
+            requestDispatcher.forward(request, response);
+        }
     }
 
     private void insertProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -197,8 +212,28 @@ public class ProductServlet extends HttpServlet {
         String image = "/assets/image/" + filename;
 
         Product product = new Product(nameProduct,price,amount,image);
-        productService.insert(product);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/product/create.jsp");
-        requestDispatcher.forward(request, response);
+
+        // Check err
+        List<String> err = new ArrayList<>();
+        if(price < 0) {
+            err.add("Price greater than zero");
+        }
+        if (amount < 0) {
+            err.add("Amount greater than zero");
+        }
+        if(!err.isEmpty()) {
+            request.setAttribute("err", err);
+            request.setAttribute("product", product);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/product/create.jsp");
+            requestDispatcher.forward(request, response);
+        }else {
+            productService.insert(product);
+            String message = "Successful Create";
+            request.setAttribute("message",message);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/product/create.jsp");
+            requestDispatcher.forward(request, response);
+        }
+
+
     }
 }

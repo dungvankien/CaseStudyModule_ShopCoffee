@@ -22,25 +22,29 @@
     <div class="row">
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+                <a class="navbar-brand" href="#"><i  class="fa-solid fa-house"></i></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
+                            <h3> <a class="nav-link" href="#">EDIT PRODUCT </a></h3>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
+        <c:if test="${message != null}">
+            <div class="alert alert-primary" role="alert">${message}</div>
+        </c:if>
+
+        <c:if test="${err != null}">
+            <c:forEach var="item" items="${err}">
+                <div class="alert alert-danger" role="alert">${item}</div>
+            </c:forEach>
+        </c:if>
+
         <form method="post" enctype="multipart/form-data">
             <div class="mb-3" >
                 <label for="ID" class="form-label">ID Product:</label>
@@ -76,22 +80,23 @@
             <button type="submit" class="btn btn-primary" value="edit products">Edit</button>
             <button class="btn btn-primary"><a href="/products" style="color: white"> Comeback Customer List</a></button>
         </form>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Active</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
-                </li>
-            </ul>
-        </nav>
+    </div>
+    <div class="container" style="position: fixed; bottom: 0; margin: 0; padding: 0" >
+        <div>
+            <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end footer" style="right: 10px">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i class="fa-regular fa-address-card"></i> Contact Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Address: </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Email: </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 <script src="/assets/js/bootstrap.bundle.js"></script>

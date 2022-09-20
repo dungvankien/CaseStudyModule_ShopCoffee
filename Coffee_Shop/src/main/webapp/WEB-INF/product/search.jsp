@@ -23,24 +23,18 @@
     <div class="row">
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="javascript:void(0)">Logo</a>
+                <a class="navbar-brand" href="#"><i  class="fa-solid fa-house"></i></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="mynavbar">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">Link</a>
+                            <h3> <a class="nav-link" href="#">PRODUCT LIST</a></h3>
                         </li>
                     </ul>
                     <form class="d-flex" method="post" action="/products?action=search">
-                        <input class="form-control me-2" type="text" placeholder="Search by Name" name="searchName" value="${requestScope.search}">
+                        <input class="form-control me-2" type="text" placeholder="Search by name" name="searchName">
                         <button class="btn btn-primary" type="submit" value="search">Search</button>
                     </form>
                 </div>
@@ -85,7 +79,7 @@
 
             </tbody>
         </table>
-        <div>
+        <div style="position: fixed; bottom: 42px">
             <ul class="pagination">
                 <li class="page-item"><a class="page-link">Page: </a></li>
                 <c:forEach begin="1" end="${endPage}" var="index">
@@ -93,23 +87,23 @@
                 </c:forEach>
             </ul>
         </div>
-
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Active</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
-                </li>
-            </ul>
-        </nav>
+    </div>
+    <div class="container" style="position: fixed; bottom: 0; margin: 0; padding: 0" >
+        <div>
+            <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end footer" style="right: 10px">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i class="fa-regular fa-address-card"></i> Contact Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Address: </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Email: </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 <script src="/assets/js/bootstrap.bundle.js"></script>
