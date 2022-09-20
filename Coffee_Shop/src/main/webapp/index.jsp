@@ -5,9 +5,12 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+<% String redirectURL = "/logins";
+response.sendRedirect(redirectURL);
+%>
+<%--<h1><%= "Hello World!" %>--%>
+<%--</h1>--%>
+<%--<br/>--%>
+<%--<a href="hello-servlet">Hello Servlet</a>--%>
 </body>
 </html>
