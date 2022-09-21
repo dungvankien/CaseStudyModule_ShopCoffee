@@ -3,7 +3,6 @@ package shopcoffee.model;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Pattern;
-import java.util.Date;
 
 public class Customer {
     private int idCustomer;
@@ -37,7 +36,7 @@ public class Customer {
     public void setIdCustomer(int idCustomer) {
         this.idCustomer = idCustomer;
     }
-    @Length(min=2, max = 45, message = "The length is between 2 and 16 characters")
+    @Length(min=2, max = 45, message = "Customer name is between 2 and 16 characters")
     public String getNameCustomer() {
         return nameCustomer;
     }
@@ -69,4 +68,6 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
+
+
 }

@@ -16,8 +16,78 @@ public class CustomerServiceImpl implements DaoInterface<Customer> {
     private static final String DELETE_CUSTOMER_SQL = "delete from Customer where idCustomer = ?;";
     private static final String UPDATE_CUSTOMER_SQL = "update Customer set nameCustomer = ?,email= ?, phone =  ?, address = ? where idCustomer = ?;";
     private static final String SELECT_CUSTOMER_BY_CONDITION = "select idCustomer, nameCustomer, email, phone, address from Customer where nameCustomer = ?;";
+    public boolean checkPhoneEdit (int id, String phone) {
+        String query = "SELECT * FROM caseshopcoffee.customer where idCustomer != ? and phone = ? ;";
+        Connection connection = JDBCUtil.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, phone);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                JDBCUtil.closeConnection(connection);
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        JDBCUtil.closeConnection(connection);
+        return false;
+    }
+    public boolean checkEmailEdit (int id, String email) {
+        String query = "SELECT * FROM caseshopcoffee.customer where idCustomer != ? and email = ? ;";
+        Connection connection = JDBCUtil.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                JDBCUtil.closeConnection(connection);
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        JDBCUtil.closeConnection(connection);
+        return false;
+    }
+    public boolean checkPhone(String phone){
+        String query = "SELECT * FROM caseshopcoffee.customer where phone  = ?;";
+        Connection connection = JDBCUtil.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, phone);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                JDBCUtil.closeConnection(connection);
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        JDBCUtil.closeConnection(connection);
+        return false;
+    }
 
+    public boolean checkEmail(String email) {
+        String query = "SELECT * FROM caseshopcoffee.customer where email = ?;";
+        Connection connection = JDBCUtil.getConnection();
+        try {
 
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                JDBCUtil.closeConnection(connection);
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        JDBCUtil.closeConnection(connection);
+        return false;
+    }
     @Override
     public int insert(Customer customer) {
         int result=0;

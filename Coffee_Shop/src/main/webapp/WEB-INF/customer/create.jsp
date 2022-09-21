@@ -35,31 +35,38 @@
                 </div>
             </div>
         </nav>
+        <c:if test="${err != null}">
+            <c:forEach var="item" items="${err}">
+                <div class="alert alert-danger" role="alert">${item}</div>
+            </c:forEach>
+        </c:if>
+        <c:if test="${successful != null}">
+            <div class="alert alert-primary" role="alert">${successful}</div>
+        </c:if>
+
         <form method="post">
             <div class="mb-3">
                 <label for="Name" class="form-label">Name Customer:</label>
-                <input type="text" class="form-control" name="name" id="Name" required>
+                <input type="text" class="form-control" name="name" id="Name" required value="${customer.getNameCustomer()}">
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email: </label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" required>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" required value="${customer.getEmail()}">
                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div class="mb-3">
                 <label for="Phone" class="form-label">Phone:</label>
-                <input type="tel" class="form-control" id="Phone" name="phone" required>
+                <input type="tel" class="form-control" id="Phone" name="phone" required value="${customer.getPhone()}">
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Address:</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" name="address" required>
+                <input type="text" class="form-control" id="exampleInputPassword1" name="address" required value="${customer.getAddress()}">
             </div>
             <button type="submit" class="btn btn-primary" value="create customers">Submit</button>
             <button class="btn btn-primary"><a href="/customers" style="color: white"> Comeback Customer List</a></button>
         </form>
-    </div>
-    <div class="container" style="position: fixed; bottom: 0; margin: 0; padding: 0" >
-        <div>
-            <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end footer" style="right: 10px">
+        <div style="padding: 0;">
+            <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end footer" >
                 <ul class="nav">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#"><i class="fa-regular fa-address-card"></i> Contact Info</a>

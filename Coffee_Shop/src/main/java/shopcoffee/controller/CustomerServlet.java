@@ -6,8 +6,14 @@ import shopcoffee.service.CustomerServiceImpl;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @WebServlet(name = "CustomerServlet", value = "/customers")
 public class CustomerServlet extends HttpServlet {
@@ -112,26 +118,85 @@ public class CustomerServlet extends HttpServlet {
     }
 
     private void updateCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Customer customer = new Customer();
         int id = Integer.parseInt(request.getParameter("id"));
+        customer.setIdCustomer(id);
         String name = request.getParameter("name");
+        customer.setNameCustomer(name);
         String email = request.getParameter("email");
+        customer.setEmail(email);
         String phone = request.getParameter("phone");
+        customer.setPhone(phone);
         String address = request.getParameter("address");
-        Customer customer = new Customer(id,name,email,phone,address);
-        customerService.update(customer);
-        request.setAttribute("customer",customer);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/customer/edit.jsp");
-        requestDispatcher.forward(request, response);
+        customer.setAddress(address);
+
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        Validator validator = validatorFactory.getValidator();
+        Set<ConstraintViolation<Customer>> constraintViolations = validator.validate(customer);
+        List<String> err = new ArrayList<>();
+        if(customerService.checkPhoneEdit(id,phone)){
+            err.add("The phone number has existed");
+        }
+        if (customerService.checkEmailEdit(id,email)){
+            err.add("Email has existed");
+        }
+        if (!constraintViolations.isEmpty()) {
+            for (ConstraintViolation<Customer> item : constraintViolations) {
+                err.add(item.getMessage());
+            }
+        }
+        if(!err.isEmpty()){
+            request.setAttribute("err",err);
+            request.setAttribute("customer",customer);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/customer/edit.jsp");
+            requestDispatcher.forward(request, response);
+
+        } else {
+            request.setAttribute("successful","Successful!");
+            customerService.update(customer);
+            request.setAttribute("customer",customer);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/customer/edit.jsp");
+            requestDispatcher.forward(request, response);
+        }
     }
 
     private void insertCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Customer customer = new Customer();
         String nameCustomer = request.getParameter("name");
+        customer.setNameCustomer(nameCustomer);
         String email = request.getParameter("email");
+        customer.setEmail(email);
         String phone = request.getParameter("phone");
+        customer.setPhone(phone);
         String address = request.getParameter("address");
-        Customer customer = new Customer(nameCustomer,email,phone,address);
-        customerService.insert(customer);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/customer/create.jsp");
-        requestDispatcher.forward(request, response);
+        customer.setAddress(address);
+
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        Validator validator = validatorFactory.getValidator();
+        Set<ConstraintViolation<Customer>> constraintViolations = validator.validate(customer);
+
+        List<String> err = new ArrayList<>();
+        if(customerService.checkEmail(email)){
+            err.add("Email has existed");
+        }
+        if (customerService.checkPhone(phone)){
+            err.add("The phone number has existed");
+        }
+        if (!constraintViolations.isEmpty()) {
+            for (ConstraintViolation<Customer> item : constraintViolations) {
+                err.add(item.getMessage());
+            }
+        }
+        if (!err.isEmpty()){
+            request.setAttribute("customer", customer);
+            request.setAttribute("err",err);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/customer/create.jsp");
+            requestDispatcher.forward(request, response);
+        } else {
+            request.setAttribute("successful","Successful!");
+            customerService.insert(customer);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/customer/create.jsp");
+            requestDispatcher.forward(request, response);
+        }
     }
 }

@@ -35,6 +35,14 @@
                 </div>
             </div>
         </nav>
+        <c:if test="${err != null}">
+            <c:forEach var="item" items="${err}">
+                <div class="alert alert-danger" role="alert">${item}</div>
+            </c:forEach>
+        </c:if>
+        <c:if test="${successful != null}">
+            <div class="alert alert-primary" role="alert">${successful}</div>
+        </c:if>
         <form method="post">
             <div class="mb-3" >
                 <label for="ID" class="form-label">ID Customer:</label>
