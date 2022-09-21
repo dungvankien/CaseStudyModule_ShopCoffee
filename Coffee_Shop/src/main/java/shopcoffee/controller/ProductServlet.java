@@ -159,16 +159,21 @@ public class ProductServlet extends HttpServlet {
         String nameProduct = request.getParameter("name");
         double price = Double.parseDouble(request.getParameter("price"));
         int amount = Integer.parseInt(request.getParameter("amount"));
+        String image;
 
         //        Upload file
-        Part part =request.getPart("image");
-        String realPath = request.getServletContext().getRealPath("/image");
-        String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-        if(!Files.exists(Paths.get(realPath))){
-            Files.createDirectory(Paths.get(realPath));
+        try{
+            Part part =request.getPart("image1");
+            String realPath = request.getServletContext().getRealPath("/image");
+            String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            if(!Files.exists(Paths.get(realPath))){
+                Files.createDirectory(Paths.get(realPath));
+            }
+            part.write("C:\\codegym\\Case Study Module 3\\CaseStudyModule_ShopCoffee\\Coffee_Shop\\src\\main\\webapp\\assets\\image\\" + filename);
+            image = "/assets/image/" + filename;
+        } catch (Exception e){
+            image=request.getParameter("image2");
         }
-        part.write("C:\\codegym\\Case Study Module 3\\CaseStudyModule_ShopCoffee\\Coffee_Shop\\src\\main\\webapp\\assets\\image\\" + filename);
-        String image = "/assets/image/" + filename;
 
         Product product = new Product(idProduct,nameProduct,price,amount,image);
 

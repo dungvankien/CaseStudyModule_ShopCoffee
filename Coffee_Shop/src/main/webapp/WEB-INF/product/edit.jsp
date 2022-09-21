@@ -74,7 +74,11 @@
             </div>
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupFile01">Upload Image</label>
-                <input value="${requestScope["product"].getImage()}" type="text" class="form-control" id="inputGroupFile01" name="image" >
+                <input value="${requestScope["product"].getImage()}" type="file" class="form-control" id="inputGroupFile01" name="image1" >
+            </div>
+            <div class="input-group mb-3" hidden>
+                <label class="input-group-text" for="inputGroupFile02">Upload Image</label>
+                <input value="${requestScope["product"].getImage()}" type="text" class="form-control" id="inputGroupFile02" name="image2" >
             </div>
 
             <button type="submit" class="btn btn-primary" value="edit products">Edit</button>
