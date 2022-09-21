@@ -66,17 +66,4 @@ public class Product {
     public void setImage(String image) {
         this.image = image;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return idProduct == product.idProduct && Double.compare(product.price, price) == 0 && amount == product.amount && Objects.equals(nameProduct, product.nameProduct) && Objects.equals(image, product.image);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idProduct, nameProduct, price, amount, image);
-    }
 }
