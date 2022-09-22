@@ -84,10 +84,8 @@
             <button type="submit" class="btn btn-primary" value="edit products">Edit</button>
             <button class="btn btn-primary"><a href="/products" style="color: white"> Comeback Customer List</a></button>
         </form>
-    </div>
-    <div class="container" style="position: fixed; bottom: 0; margin: 0; padding: 0" >
-        <div>
-            <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end footer" style="right: 10px">
+        <div style="padding: 0;">
+            <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-end footer" >
                 <ul class="nav">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#"><i class="fa-regular fa-address-card"></i> Contact Info</a>
