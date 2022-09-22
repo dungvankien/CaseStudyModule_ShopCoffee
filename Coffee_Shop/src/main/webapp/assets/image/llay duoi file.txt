@@ -1,0 +1,8 @@
+String extension = "";
+        int i = filename.lastIndexOf('.');
+        if (i >= 0) {
+            extension = filename.substring(i+1);
+        }
+        if(!extension.equals("JPG") || !extension.equals("JPEG") || !extension.equals("PNG")) {
+            err.add("The file is not in the right format");
+        }

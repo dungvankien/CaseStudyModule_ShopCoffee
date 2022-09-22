@@ -18,6 +18,21 @@ public class ProductServiceImpl implements DaoInterface<Product>{
     private static final String UPDATE_PRODUCT_SQL = "update Product set nameProduct = ?, price= ?, amount = ?, image = ? where idProduct = ?;";
     private static final String SELECT_PRODUCT_BY_CONDITION = "select idProduct, nameProduct, price, amount, image from Product where nameProduct = ?;";
 
+    public boolean checkFileImage(String filename){
+        String extension = "";
+        String [] extensionFileImg = {"JPG", "JPEG", "GIF", "PNG", "SVG","TIFF"};
+        int i = filename.lastIndexOf('.');
+        if (i >= 0) {
+            extension = filename.substring(i+1);
+        }
+        for (String item: extensionFileImg) {
+            if((item.trim().toLowerCase()).equals(extension.toLowerCase())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public int insert(Product product) {
         int result=0;

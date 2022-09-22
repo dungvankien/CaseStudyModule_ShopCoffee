@@ -160,6 +160,7 @@ public class ProductServlet extends HttpServlet {
         double price = Double.parseDouble(request.getParameter("price"));
         int amount = Integer.parseInt(request.getParameter("amount"));
         String image;
+        List<String> err = new ArrayList<>();
 
         //        Upload file
         try{
@@ -171,6 +172,9 @@ public class ProductServlet extends HttpServlet {
             }
             part.write("C:\\codegym\\Case Study Module 3\\CaseStudyModule_ShopCoffee\\Coffee_Shop\\src\\main\\webapp\\assets\\image\\" + filename);
             image = "/assets/image/" + filename;
+            if(!productService.checkFileImage(filename)){
+                err.add("The file is not in the correct format Image");
+            }
         } catch (Exception e){
             image=request.getParameter("image2");
         }
@@ -178,7 +182,6 @@ public class ProductServlet extends HttpServlet {
         Product product = new Product(idProduct,nameProduct,price,amount,image);
 
         // Check err
-        List<String> err = new ArrayList<>();
         if(price < 0) {
             err.add("price greater than zero");
         }
@@ -219,6 +222,9 @@ public class ProductServlet extends HttpServlet {
 
         // Check err
         List<String> err = new ArrayList<>();
+        if(!productService.checkFileImage(filename)){
+            err.add("The file is not in the correct format Image");
+        }
         if(price < 0) {
             err.add("Price greater than zero");
         }
